@@ -1,15 +1,14 @@
 const express = require('express'); 
 const router = express.Router();   
-const jwtGen = require("../utils/jwtGen");
+const jwtGen = require("../utils/jwtGen"); 
+const authorization = require("../utils/jwtAuth");
 
 //Bcrypt 
 const crypt = require('bcryptjs');
 const saltRounds = 10;  
 
 //PostgreSQL Connection Setup  
-console.log(require('dotenv').config())
 const {Pool, Client } = require('pg'); 
-const jwt_GenerateToken = require('../utils/jwtGen');
 
 const pool = new Pool({ 
     user: process.env.PGUSER,
@@ -17,7 +16,7 @@ const pool = new Pool({
     host: process.env.PGHOST,
     database: process.env.PGDATABASE,
     port: process.env.PGPORT,
-});
+});  
 
 //User Registration
 router.post('/register', async (req, res) => {
@@ -105,7 +104,6 @@ router.post('/login',async (req,res) =>
         return res.status(401).json("Password or Email is incorrect");
     } 
 
-    
     const hashedPassword = await crypt.compare(password,user.rows[0].password); 
 
     if(!hashedPassword) 
@@ -115,9 +113,20 @@ router.post('/login',async (req,res) =>
 
     
     //Send Session Token 
-    
     const token = jwtGen(user.rows[0].username);
     res.json({token});
 });
 
+router.get('/verify', authorization, async (req, res)=> 
+{ 
+    try
+    { 
+        res.json(true);
+    } 
+    catch(err) 
+    { 
+        res.status(500).send("Server Error");
+    }
+
+});
 module.exports = router;
