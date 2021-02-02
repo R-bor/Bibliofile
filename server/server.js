@@ -11,10 +11,16 @@ app.listen(5000, () => console.log('Server Started...'));
  *      ROUTES     *
  *******************/  
 
-//Users API
-app.use('/user', require('./routes/userauth'));
+//Login
+app.use('/login',require('./routes/login')); 
+
+//Register 
+app.use('/register',require('./routes/register')); 
+
+//Verify Token
+
 
 //Dashboard  
-app.use('/dashboard', require('./routes/dashboard'));
+//app.use('/dashboard', require('./routes/dashboard'));
 
 

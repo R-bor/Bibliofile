@@ -1,8 +1,3 @@
-const router = require('express'); 
-const {Pool, Client } = require('pg'); 
+const express = require('express'); 
+const router = express.Router();   
 const authorization = require("../utils/jwtAuth"); 
-
-router.length('/', authorization, async(req,res)=> 
-{ 
-    
-});
