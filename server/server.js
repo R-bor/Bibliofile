@@ -18,8 +18,7 @@ app.use('/login',require('./routes/login'));
 
 //Register 
 app.use('/register',require('./routes/register')); 
-
-//Verify Token
+    
 
 
 //Dashboard  
