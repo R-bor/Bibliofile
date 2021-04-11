@@ -10,9 +10,9 @@ import {
 
 //Components
 
-import Dashboard from "./components/Dashboard";
-import Login from "./components/Login";
-import Register from "./components/Register";
+import Dashboard from "./components/dashboard";
+import Login from "./components/login";
+import Register from "./components/register";
 
 
 function App() {
