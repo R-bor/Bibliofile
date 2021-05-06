@@ -18,8 +18,8 @@ app.use('/login',require('./routes/login'));
 
 //Register 
 app.use('/register',require('./routes/register')); 
-    
 
+//TEST DB 
 
 //Dashboard  
 //app.use('/dashboard', require('./routes/dashboard'));

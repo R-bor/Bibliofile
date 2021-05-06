@@ -2,7 +2,9 @@ const express = require('express');
 const router = express.Router();  
 const db = require("../utils/database");
 const bcrypt = require('bcryptjs'); 
-const saltRounds = 10;
+const saltRounds = 10; 
+const User = require('../models/User');   
+
 
 
 router.post('/', async (req, res) => {
@@ -31,9 +33,14 @@ router.post('/', async (req, res) => {
         }  
 
         //Check Unique Username
-        var result = await db.query('SELECT * FROM accounts WHERE username = $1', [username]);
+        result = await User.findAll({ 
+            where: 
+            { 
+                username: username
+            }
+        }); 
 
-        if(result.rowCount>0) 
+        if(result.length>0) 
         { 
             errorMessage.push({message:"Username already in use"}); 
         } 
@@ -47,20 +54,18 @@ router.post('/', async (req, res) => {
         //if no errors, Add New user 
         else 
         { 
-            res.send('Pass'); 
             //Hash Password 
             bcrypt.genSalt(saltRounds, function (err, salt)  
             { 
                 bcrypt.hash(password, salt, function (err, hash)  
                 { 
-                    // Store in Database
-                    db.query('INSERT INTO accounts (username, password, email) VALUES($1,$2,$3)', [username, hash, email], (err, results) => 
-                    {
-                        if (err) 
-                        {
-                           throw err;
-                        }
-                    });
+                    // Store in Database 
+
+                    newAccount = User.create({ 
+                        username: username, 
+                        password: hash, 
+                        email: email
+                    })
                 }); 
             });
         } 
@@ -68,7 +73,8 @@ router.post('/', async (req, res) => {
     catch (err) 
     {
         console.log(err);
-    }
+    } 
+    res.send('User Created');
 }); 
 
 module.exports = router;
