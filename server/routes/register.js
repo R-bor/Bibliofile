@@ -10,7 +10,8 @@ const User = require('../models/User');
 router.post('/', async (req, res) => {
     try {
         let { username, password, password2, email } = req.body;
-        let errorMessage = [];
+        
+        let errorMessages = [];
 
         console.log({
             username,
@@ -20,36 +21,50 @@ router.post('/', async (req, res) => {
         });
 
         //Check for all form fields
-        if (!username || !password || !password2 || !email) {
-            errorMessage.push({ message: "Please fill out all required fields" });
+        if (!username) {
+            errorMessages.push("Username missing");
+        } 
+        if(!password)  
+        { 
+            errorMessages.push("Passoword missing");
+        }
+        if(!password2)  
+        { 
+            errorMessages.push("Password confirmation missing")
+        }
+        if(!email) 
+        { 
+            errorMessages.push("Email missing");
         }
         //Check for matching passwords
         if (password != password2) {
-            errorMessage.push({ message: "Passwords do not match" });
+            errorMessages.push("Passwords do not match" );
         }
         //Check minimum password length 
         if (password.length < 8) {
-            errorMessage.push({ message: "Password must be a minimum of 8 characters" });
+            errorMessages.push("Password must be a minimum of 8 characters");
         }  
 
-        //Check Unique Username
-        result = await User.findAll({ 
-            where: 
+        //Check Unique Username 
+        if(username) 
+        { 
+            result = await User.findAll({ 
+                where: 
+                { 
+                    username: username
+                }
+            });  
+            if(result.length>0) 
             { 
-                username: username
-            }
-        }); 
-
-        if(result.length>0) 
-        { 
-            errorMessage.push({message:"Username already in use"}); 
+                errorMessages.push({message:"Username already in use"});  
+            } 
         } 
-        
+
         //Send back errors 
-        console.log(errorMessage.length);
-        if(errorMessage.length>0) 
+        if(errorMessages.length>0) 
         { 
-            res.json(errorMessage); 
+            res.json({errors:errorMessages}); 
+            return; 
         } 
         //if no errors, Add New user 
         else 

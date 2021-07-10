@@ -7,12 +7,28 @@ const User = require('../models/User');
 
 router.post('/',async (req,res) => 
 { 
-
+    let errorMessages = [];
     db.authenticate() 
     .then(()=> console.log('Database Connected...')) 
     .catch(err=>console.log('Error:'+err)) 
 
-    let {email, password} = req.body; 
+    let {email, password} = req.body;  
+
+    if(!email) 
+    { 
+        errorMessages.push('No email provided');  
+    } 
+
+    if(!password) 
+    { 
+        errorMessages.push('No password provided'); 
+    } 
+
+    if(errorMessages.length>0) 
+    { 
+        res.json({errors:errorMessages}); 
+        return; 
+    } 
 
     const users = await User.findAll({ 
         where: 

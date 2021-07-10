@@ -1,11 +1,9 @@
 const Sequelize = require('sequelize'); 
 const db = require('../utils/database'); 
-const { v4: uuidv4 } = require('uuid');
 
-const User = db.define('account',{
+const User = db.define('users',{
     id:{ 
-        type: Sequelize.UUID,    
-        defaultValue: Sequelize.UUIDV4, 
+        type: Sequelize.INTEGER, 
         autoIncrement: true,
         primaryKey: true
     }, 
@@ -16,6 +14,5 @@ const User = db.define('account',{
 { 
     timestamps:false 
 }); 
-User.beforeCreate(user => user.id = uuidv4());
 
 module.exports = User;
