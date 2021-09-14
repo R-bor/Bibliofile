@@ -1,49 +1,38 @@
-const express = require('express'); 
-const router = express.Router();   
-const db = require("../utils/database");  
-const jwtGen = require("../utils/jwtGen");  
+const express = require('express');
+const router = express.Router();
+const db = require("../utils/database");
+const jwtGen = require("../utils/jwtGen");
 const bcrypt = require('bcryptjs');
-const User = require('../models/User');  
+const Query = require("../utils/queries");
+const Auth = require("../utils/authenticate");
+const User = require('../models/User');
 
-router.post('/',async (req,res) => 
-{ 
-    let errorMessages = [];
-    db.authenticate() 
-    .then(()=> console.log('Database Connected...')) 
-    .catch(err=>console.log('Error:'+err)) 
 
-    let {email, password} = req.body;  
+router.post('/', async (req, res) => {
+    //  let errorMessages = [];
+    let { emailOrUsername, password } = req.body;
 
-    if(!email) 
-    { 
-        errorMessages.push('No email provided');  
-    } 
+    db.authenticate()
+        .then(() => console.log('Database Connected...'))
+        .catch(err => console.log('Error:' + err));
 
-    if(!password) 
-    { 
-        errorMessages.push('No password provided'); 
-    } 
+    //Verify login data valid
+    const { error } = Auth.loginValid(req.body);
+    if (error) return res.status(400).send(error.details[0].message);
 
-    if(errorMessages.length>0) 
-    { 
-        res.json({errors:errorMessages}); 
-        return; 
-    } 
 
-    const users = await User.findAll({ 
-        where: 
-        { 
-            email: email
-        }
-    }); 
+    //Verify username exists 
+    const user = await Query.getUser(emailOrUsername);
+    if (!user) return res.status(400).send("Email or Username does not exist");
 
-    const hashedPassword = await bcrypt.compare(password, users[0].password); 
-    if(!hashedPassword) 
-    { 
-        return res.status(401).json("Email or password is incorrect"); 
-    }   
-    const token = jwtGen(users[0].username);
-    res.json({token});
-});  
+    //Verify correct password 
+    const validPassword = await bcrypt.compare(password, user.password);
+    if (!validPassword) return res.status(401).send("Password incorrect");
+
+    //Generate JWT Token and add to Authroization field
+    const token = jwtGen(user.username);
+    res.header('Authorization',token)
+
+});
 
 module.exports = router;

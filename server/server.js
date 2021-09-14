@@ -7,11 +7,12 @@ app.use(express.json());
 app.use(cors());
 
 //server listener
-app.listen(5000, () => console.log('Server Started on port 5000'));   
+app.listen(5000, () => console.log('Server Started on port 5000')); 
+
 
 /*******************
  *      ROUTES     *
- *******************/  
+ *******************/   
 
 //Login
 app.use('/login',require('./routes/login')); 
@@ -19,9 +20,7 @@ app.use('/login',require('./routes/login'));
 //Register 
 app.use('/register',require('./routes/register')); 
 
-//TEST DB 
-
 //Dashboard  
-//app.use('/dashboard', require('./routes/dashboard'));
+app.use('/dashboard', require('./routes/dashboard'));
 
 

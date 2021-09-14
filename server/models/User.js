@@ -12,7 +12,7 @@ const User = db.define('users',{
     email: Sequelize.STRING,  
 }, 
 { 
-    timestamps:false 
+    timestamps:false
 }); 
 
 module.exports = User;
