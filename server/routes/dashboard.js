@@ -1,14 +1,19 @@
 const express = require('express'); 
-const Book = require('../models/Book');
 const router = express.Router();   
 const Verify = require("../utils/jwtAuth");   
-const Query = require('../utils/queries');
-
-//   
+const Query = require('../utils/queries'); 
+const JWT = require('jsonwebtoken');
 
 router.get('/', Verify, async (req,res) => 
 { 
-  res.send("DASHBOARD ACCESSED");
+    //Retrive decoded token  
+      
+    const token = JWT.decode(req.header('Authorization'))  
+
+    //Grab User Bookshelf 
+
+    const bookshelf = await Query.getUserBookshelf(token.user); 
+    res.send(bookshelf);
 
 });   
 

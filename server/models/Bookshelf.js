@@ -17,8 +17,7 @@ const Shelf = db.define('bookshelves',
     timestamps:false 
 });  
 
-Shelf.hasMany(Book); 
-//Shelf.hasMany(User); 
+Shelf.hasMany(Book,{foreignKey:'title', sourceKey:'title'}); 
 
 module.exports = Shelf;
 

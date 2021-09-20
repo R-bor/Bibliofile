@@ -4,7 +4,10 @@ const app = express();
 const cors = require('cors');
 
 app.use(express.json());  
-app.use(cors());
+
+//CORS Setup
+app.use(cors());  
+app.options('*', cors());
 
 //server listener
 app.listen(5000, () => console.log('Server Started on port 5000')); 
@@ -13,9 +16,8 @@ app.listen(5000, () => console.log('Server Started on port 5000'));
 /*******************
  *      ROUTES     *
  *******************/   
-
 //Login
-app.use('/login',require('./routes/login')); 
+app.use('/login',require('./routes/login'));  
 
 //Register 
 app.use('/register',require('./routes/register')); 

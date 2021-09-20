@@ -5,12 +5,11 @@ const jwtGen = require("../utils/jwtGen");
 const bcrypt = require('bcryptjs');
 const Query = require("../utils/queries");
 const Auth = require("../utils/authenticate");
-const User = require('../models/User');
-
 
 router.post('/', async (req, res) => {
-    //  let errorMessages = [];
-    let { emailOrUsername, password } = req.body;
+   
+    console.log(req.body);
+    let { emailOrUsername, password } = req.body; 
 
     db.authenticate()
         .then(() => console.log('Database Connected...'))
@@ -31,8 +30,10 @@ router.post('/', async (req, res) => {
 
     //Generate JWT Token and add to Authroization field
     const token = jwtGen(user.username);
-    res.header('Authorization',token)
-
+   // res.header('Access-Control-Allow-Origin','*'); 
+  //  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header('Authorization',token).status(200);  
+    console.log(token);
 });
 
 module.exports = router;
