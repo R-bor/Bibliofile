@@ -43,15 +43,12 @@ export default function  SignIn() {
 
     const response = await fetch('http://localhost:5000/login', { 
       method: 'POST',  
-      //mode:'no-cors', //OMITS THE BODY DO NOT USE
- /*      credentials: 'omit', 
-      referrerPolicy: 'no-referrer', */
       headers: {'Content-Type': 'application/json'},
       body:JSON.stringify(req)
     });
     
-    const body = await response.json(); 
-    console.log(body);
+    const parseRes = await response.json(); 
+    console.log(response);
   };
 
   return (
@@ -112,7 +109,7 @@ export default function  SignIn() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/register" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
