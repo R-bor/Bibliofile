@@ -31,9 +31,10 @@ router.post('/', async (req, res) => {
     //Generate JWT Token and add to Authroization field
     const token = jwtGen(user.username);
    // res.header('Access-Control-Allow-Origin','*'); 
-  //  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    res.header('Authorization',token).status(200);  
-    console.log(token);
+   // res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept"); 
+    //res.json({token});{{
+    res.header('Authorization','Bearer ' + token).json({'Message':'OK'}).status(200);
+    //console.log(token);
 });
 
 module.exports = router;

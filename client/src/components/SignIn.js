@@ -47,8 +47,12 @@ export default function  SignIn() {
       body:JSON.stringify(req)
     });
     
-    const parseRes = await response.json(); 
-    console.log(response);
+    const resStatus = await response.status; 
+    if(resStatus == 200) 
+    { 
+       //GO TO DASHBOARD FROM HERE
+    }
+
   };
 
   return (

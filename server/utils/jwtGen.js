@@ -7,7 +7,7 @@ function jwt_GenerateToken(username)
         user: username
     } 
 
-   return jwt.sign(payload,process.env.JWT_SECRET);
+   return jwt.sign(payload,process.env.JWT_SECRET, {expiresIn:'1h'});
 } 
 
 module.exports = jwt_GenerateToken;
