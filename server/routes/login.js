@@ -33,7 +33,7 @@ router.post('/', async (req, res) => {
    // res.header('Access-Control-Allow-Origin','*'); 
    // res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept"); 
     //res.json({token});{{
-    res.header('Authorization','Bearer ' + token).json({'Message':'OK'}).status(200);
+    res.header('Authorization',token).json({'Message':'OK'}).status(200);
     //console.log(token);
 });
 

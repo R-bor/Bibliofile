@@ -8,7 +8,7 @@ router.get('/', Verify, async (req,res) =>
 { 
     //Retrive decoded token  
       
-    const token = JWT.decode(req.header('Authorization'))  
+    const token = JWT.decode(req.header('Authorization'));
 
     //Grab User Bookshelf 
 

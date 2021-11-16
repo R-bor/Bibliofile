@@ -17,14 +17,19 @@ import Dashboard from "./components/Dashboard";
 
 //App 
 function App() {
-  const [isAuth, setAuth] = useState(false);
+  const [isAuth, setAuth] = useState(false); 
+
+  const setAuthenticated = (boolean) => 
+  { 
+    setAuth(boolean);
+  }
 
   return (
     <Fragment>
       <Router>
         <div className="container">
           <Switch>
-            <Route exact path='/' render={props => !isAuth ? <SignIn {...props} /> : <Redirect to='/dashboard' />} />
+            <Route exact path='/' render={props => !isAuth ? <SignIn {...props} setAuthenticated={setAuthenticated}/> : <Redirect to='/dashboard' />} />
             <Route exact path='/register' render={props => <Register {...props} />} />
             <Route exact path='/dashboard' render={props => isAuth ? <Dashboard {...props} /> : <Redirect to='/' />} />
           </Switch>

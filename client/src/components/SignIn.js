@@ -11,9 +11,11 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles'; 
+import { Redirect } from "react-router-dom"; 
 
-function Copyright(props) {
+
+function Copyright(props) { 
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
@@ -28,7 +30,7 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function  SignIn() {
+const  SignIn = ({setAuthenticated}) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -48,9 +50,9 @@ export default function  SignIn() {
     });
     
     const resStatus = await response.status; 
-    if(resStatus == 200) 
+    if(resStatus === 200) 
     { 
-       //GO TO DASHBOARD FROM HERE
+       setAuthenticated(true);
     }
 
   };
@@ -124,4 +126,6 @@ export default function  SignIn() {
       </Container>
     </ThemeProvider>
   );
-}
+};  
+
+export default SignIn; 
