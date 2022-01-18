@@ -8,10 +8,13 @@ Redirect
 } from "react-router-dom";
 
 //Components 
-import Header from "./components/Header";
+//import Header from "./components/Header";
 import SignIn from "./components/SignIn";
 import Register from "./components/Register";
-import Dashboard from "./components/Dashboard";
+import Dashboard from "./components/Dashboard"; 
+
+
+
 
 
 

@@ -12,8 +12,6 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles'; 
-import { Redirect } from "react-router-dom"; 
-
 
 function Copyright(props) { 
   return (
@@ -49,10 +47,12 @@ const  SignIn = ({setAuthenticated}) => {
       body:JSON.stringify(req)
     });
     
-    const resStatus = await response.status; 
-    if(resStatus === 200) 
+    const resData = await response.json();
+    
+    if(response.status === 200) 
     { 
-       setAuthenticated(true);
+      localStorage.setItem('token',resData.token); 
+      setAuthenticated(true); 
     }
 
   };

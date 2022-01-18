@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import * as FaIcons from 'react-icons/fa'; 
 import {Link} from 'react-router-dom'; 
-import * as AiIcons from 'react-icons/ai'; 
+import * as AiIcons from 'react-icons/ai';
 import {NavBarData} from './NavBarData'; 
 import './NavBar.css'; 
 import {IconContext} from 'react-icons'

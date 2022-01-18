@@ -6,6 +6,7 @@ const bcrypt = require('bcryptjs');
 const Query = require("../utils/queries");
 const Auth = require("../utils/authenticate");
 
+
 router.post('/', async (req, res) => {
    
     console.log(req.body);
@@ -28,13 +29,14 @@ router.post('/', async (req, res) => {
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) return res.status(401).send("Password incorrect");
 
-    //Generate JWT Token and add to Authroization field
-    const token = jwtGen(user.username);
-   // res.header('Access-Control-Allow-Origin','*'); 
-   // res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept"); 
-    //res.json({token});{{
-    res.header('Authorization',token).json({'Message':'OK'}).status(200);
-    //console.log(token);
+    //Generate JWT Token and add to http-only cookie
+    const token = jwtGen(user.username); 
+    //res.cookie('Authorization',token,{httpOnly: true, domain: 'http://localhost:3000'}) 
+    //res.header('Authorization',token).json({'Message':'OK'}).status(200);
+    res.json({
+        token: token,
+        message: 'OK'
+    }).status(200)
 });
 
 module.exports = router;
