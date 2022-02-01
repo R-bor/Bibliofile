@@ -22,7 +22,7 @@ function getUser(emailOrUsername)
 function getUserBookshelf(user) 
 { 
     result = Shelf.findAll({  
-        attributes: ['username','title'],
+        attributes: ['title'],
         where: {username:user},
         include: [{ 
             model: Book,  

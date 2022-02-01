@@ -1,6 +1,5 @@
 import NavBar from './NavBar'
-import React from 'react' 
-import BookItem from './BookItem' 
+import React from 'react'
 import DashboardData from './DashboardData'
 
 
