@@ -51,7 +51,7 @@ const  SignIn = ({setAuthenticated}) => {
     
     if(response.status === 200) 
     { 
-      localStorage.setItem('token',resData.token); 
+      localStorage.setItem('token',resData.token);
       setAuthenticated(true); 
     }
 

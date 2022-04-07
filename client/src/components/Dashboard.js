@@ -1,14 +1,12 @@
-import NavBar from './NavBar'
 import React from 'react'
-import DashboardData from './DashboardData'
+import DashboardData from './DashboardData' 
+import AddButton from './AddButton'
 
-
-export default function Dashboard() { 
-    
+export default function Dashboard() {     
     return (
         <div> 
-            <NavBar/> 
-            <DashboardData/>
+            <DashboardData/> 
+            <AddButton/>
         </div>
     )
 };

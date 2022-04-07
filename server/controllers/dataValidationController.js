@@ -1,6 +1,5 @@
 const Joi = require('joi'); 
 
-
 //Registration Validation 
 const registerSchema = Joi.object ({
     username: Joi.string()
@@ -21,7 +20,7 @@ const registerSchema = Joi.object ({
 //Login Validation
 const loginSchema = Joi.object({ 
     
-    emailOrUsername:Joi.string() 
+    username:Joi.string() 
     .required(), 
     password: Joi.string() 
     .required() 

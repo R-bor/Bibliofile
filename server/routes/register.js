@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const db = require("../utils/database");
+const db = require("../controllers/databaseController");
 const bcrypt = require('bcryptjs');
 const saltRounds = 10;
 const User = require('../models/User');
-const Auth = require('../utils/authenticate');
+const Auth = require('../controllers/dataValidationController');
 
 
 

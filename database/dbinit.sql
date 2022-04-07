@@ -3,7 +3,8 @@ CREATE TABLE IF NOT EXISTS users
     "id" serial NOT NULL,
     username text UNIQUE NOT NULL,
     password text NOT NULL,
-    email text NOT NULL,
+    email text NOT NULL, 
+    refreshToken text,
     PRIMARY KEY ("id")
 ); 
 

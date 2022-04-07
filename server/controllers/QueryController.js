@@ -1,4 +1,4 @@
-const db = require("../utils/database"); 
+const db = require("./databaseController"); 
 const User = require('../models/User');  
 const { Op, Model } = require("sequelize"); 
 const Book = require("../models/Book"); 
@@ -33,5 +33,13 @@ function getUserBookshelf(user)
     return result;
 } 
 
+function getUserRefreshToken(user) 
+{ 
+    result = User.findOne({  
+        attributes:['refreshtoken'], 
+        where: {username:user} 
+    }) 
+    return result;
+}
 
-module.exports = {getUser,getUserBookshelf};
+module.exports = {getUser,getUserBookshelf,getUserRefreshToken}

@@ -18,7 +18,7 @@ export const NavBarData = [
    },  
    { 
     title: 'Search', 
-    path: '#', 
+    path: '/search', 
     icon: <AiIcons.AiOutlineSearch/>, 
     className: 'nav-text'
    }

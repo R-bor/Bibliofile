@@ -1,16 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const db = require("../utils/database");
-const jwtGen = require("../utils/jwtGen");
+const db = require("../controllers/databaseController");
+const jwtGen = require("../controllers/jwtController");
 const bcrypt = require('bcryptjs');
-const Query = require("../utils/queries");
-const Auth = require("../utils/authenticate");
+const Query = require("../controllers/QueryController");
+const Auth = require("../controllers/dataValidationController"); 
 
 
 router.post('/', async (req, res) => {
    
     console.log(req.body);
-    let { emailOrUsername, password } = req.body; 
+    let { username, password } = req.body; 
 
     db.authenticate()
         .then(() => console.log('Database Connected...'))
@@ -22,21 +22,29 @@ router.post('/', async (req, res) => {
 
 
     //Verify username exists 
-    const user = await Query.getUser(emailOrUsername);
+    const user = await Query.getUser(username);
     if (!user) return res.status(400).send("Email or Username does not exist");
 
     //Verify correct password 
     const validPassword = await bcrypt.compare(password, user.password);
-    if (!validPassword) return res.status(401).send("Password incorrect");
+    if (!validPassword) return res.status(401).send("Invalid Password");
+    
+    //Generate JWT Tokens
+    const accessToken =  jwtGen.signJWT({user: user.username, email: user.email},"5m");
+    const refreshToken = jwtGen.signRefreshToken({user: user.username, email: user.email},"7d"); 
+    
+    //Store Refresh Token in DB
+    user.refreshtoken = refreshToken;
+    await user.save();
+    console.log(refreshToken); 
+    console.log(accessToken);
 
-    //Generate JWT Token and add to http-only cookie
-    const token = jwtGen(user.username); 
-    //res.cookie('Authorization',token,{httpOnly: true, domain: 'http://localhost:3000'}) 
-    //res.header('Authorization',token).json({'Message':'OK'}).status(200);
-    res.json({
-        token: token,
-        message: 'OK'
-    }).status(200)
+    //cookie time
+    res.cookie('accessToken',accessToken,{ 
+        httpOnly: true,
+    }).json({ 
+        accessToken:accessToken, 
+        message: "ok"});
 });
 
 module.exports = router;

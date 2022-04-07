@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize'); 
-const db = require('../utils/database'); 
-
+const dbcontroller = require('../controllers/databaseController'); 
+const db = require("../controllers/databaseController")
 const User = db.define('users',{
     id:{ 
         type: Sequelize.INTEGER, 
@@ -9,7 +9,8 @@ const User = db.define('users',{
     }, 
     username: Sequelize.STRING,
     password: Sequelize.STRING,
-    email: Sequelize.STRING,  
+    email: Sequelize.STRING,
+    refreshtoken: Sequelize.STRING,  
 }, 
 { 
     timestamps:false
