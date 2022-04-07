@@ -1,0 +1,17 @@
+.addButtonContainer
+{
+    float:right; 
+    margin-right: 10px; 
+} 
+
+.addButton 
+{ 
+    width:80px; 
+    height:80px;
+} 
+
+.addIcon 
+{ 
+     font-size: 2.5rem;
+}
+
