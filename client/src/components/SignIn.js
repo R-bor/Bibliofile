@@ -37,18 +37,19 @@ const  SignIn = ({setAuthenticated}) => {
     let pass = data.get('password');  
 
     let req={ 
-      emailOrUsername:email, 
+      username:email, 
       password:pass
     }
 
     const response = await fetch('http://localhost:5000/login', { 
-      method: 'POST',  
+      method: 'POST', 
       headers: {'Content-Type': 'application/json'},
       body:JSON.stringify(req)
     });
     
     const resData = await response.json();
-    
+    //console.log(response.status);
+   
     if(response.status === 200) 
     { 
       localStorage.setItem('token',resData.token);

@@ -17,12 +17,12 @@ import Search from "./components/SearchBar";
 
 //App 
 function App() {
-  const [isAuth, setAuth] = useState(false);  
+  const [isAuth, setAuth] = useState();  
 
   const setAuthenticated = (boolean) => 
   { 
     setAuth(boolean);
-  } 
+  }  
 
   return (
     <Fragment>
@@ -31,7 +31,7 @@ function App() {
           <Switch>
             <Route exact path='/' render={props => !isAuth ? <SignIn {...props} setAuthenticated={setAuthenticated}/> : <Redirect to='/dashboard' />} />
             <Route exact path='/register' render={props => <Register {...props} />} />
-            <Route exact path='/dashboard' render={props => isAuth ? <><Navbar /><Dashboard {...props} /></> : <Redirect to='/' />} />
+            <Route exact path='/dashboard' render={props => isAuth ? <><Navbar /><Dashboard {...props}/></> : <Redirect to='/' />} />
             <Route exact path='/search' render={props => isAuth ? <><Navbar /><Search {...props} /></> : <Redirect to='/' />} />
           </Switch>
         </div>

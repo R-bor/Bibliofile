@@ -2,6 +2,7 @@
 const express = require('express');  
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const { allow } = require('joi');
 
 const app = express(); 
 
@@ -11,7 +12,7 @@ app.use(express.urlencoded({extended: true}));
 
 //CORS Setup
 app.use(cors({ 
-  credentials: true, 
+  credentials: true,
   origin: "http://localhost:3000",
 }));  
 

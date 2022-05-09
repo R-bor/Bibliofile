@@ -7,25 +7,24 @@ export default class UserShelf extends React.Component {
   };
 
   async componentDidMount() {  
-    let token = localStorage.getItem('token'); 
-    console.log(token);
+    //let token = localStorage.getItem('token'); 
+    //console.log(token);
 
     const url = "http://localhost:5000/dashboard";  
     const response = await fetch(url,{ 
-      headers:{ 
-        Authorization: token
-      }
-    });
-    const resData = await response.json();
+          method: 'GET', 
+          credentials: 'include'
+      });
+    const resData = await response.json(); 
+    console.log(response);
     const dataItems = resData.map((resData)=>  
     <div className="book-item">
       <p>{resData.title}</p> 
       <p>Author: {resData.books[0].author}</p>
     </div>); 
-    console.log(resData);
+    //console.log(resData);
     this.setState({ shelf: dataItems});
     this.setState({ loading: false }); 
-    
   }
   
   render() {   

@@ -6,11 +6,10 @@ const bcrypt = require('bcryptjs');
 const Query = require("../controllers/QueryController");
 const Auth = require("../controllers/dataValidationController"); 
 
-
 router.post('/', async (req, res) => {
    
-    console.log(req.body);
-    let { username, password } = req.body; 
+    //console.log(req.body);
+    let { username, password } = req.body;  
 
     db.authenticate()
         .then(() => console.log('Database Connected...'))
@@ -19,7 +18,6 @@ router.post('/', async (req, res) => {
     //Verify login data valid
     const { error } = Auth.loginValid(req.body);
     if (error) return res.status(400).send(error.details[0].message);
-
 
     //Verify username exists 
     const user = await Query.getUser(username);
@@ -36,15 +34,11 @@ router.post('/', async (req, res) => {
     //Store Refresh Token in DB
     user.refreshtoken = refreshToken;
     await user.save();
-    console.log(refreshToken); 
-    console.log(accessToken);
+    //console.log(refreshToken); 
+    //console.log(accessToken);
 
-    //cookie time
-    res.cookie('accessToken',accessToken,{ 
-        httpOnly: true,
-    }).json({ 
-        accessToken:accessToken, 
-        message: "ok"});
+    //Send Access token to be stored client side in localstorage
+    res.header('Authoirization','Bearer ' + accessToken).status(200).send('OK');
 });
 
 module.exports = router;
